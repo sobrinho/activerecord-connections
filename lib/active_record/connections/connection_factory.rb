@@ -11,20 +11,14 @@ module ActiveRecord
       self.connection_classes = {}
 
       # Establishes connection or return an existing one from cache
-      def self.connect(connection_name, connection_spec)
-        connection_classes[connection_name] ||= establish_connection(connection_name, connection_spec)
+      def self.establish_connection(connection_name, connection_spec)
+        connection_classes[connection_name] ||= make_connection_klass(connection_name, connection_spec)
       end
 
       protected
 
-      # Establish connection with a specified name
-      def self.establish_connection(connection_name, connection_spec = {})
-        abstract_class = generate_abstract_class(connection_name, connection_spec)
-        ActiveRecord::Connections::ConnectionProxy.new(abstract_class)
-      end
-
       # Generate an abstract AR class with specified connection established
-      def self.generate_abstract_class(connection_name, connection_spec)
+      def self.make_connection_klass(connection_name, connection_spec)
         # Generate class
         klass = generate_connection_klass(connection_name)
 
