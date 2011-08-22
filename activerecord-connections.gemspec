@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Gabriel Sobrinho"]
   s.email       = ["gabriel.sobrinho@gmail.com"]
   s.homepage    = "https://github.com/sobrinho/activerecord-connections"
-  s.summary     = %q{ActiveRecord with multiple databases}
-  s.description = %q{ActiveRecord with multiple databases}
+  s.summary     = %q{A new way to manage multi-tenant applications based on multiples databases}
+  s.description = %q{A new way to manage multi-tenant applications based on multiples databases}
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
