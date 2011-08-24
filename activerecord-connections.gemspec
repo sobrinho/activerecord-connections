@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "activerecord-connections"
-  s.version     = "0.0.1"
+  s.version     = "0.0.2"
   s.authors     = ["Gabriel Sobrinho"]
   s.email       = ["gabriel.sobrinho@gmail.com"]
   s.homepage    = "https://github.com/sobrinho/activerecord-connections"
