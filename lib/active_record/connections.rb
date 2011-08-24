@@ -2,7 +2,7 @@ require 'active_support/concern'
 
 module ActiveRecord
   module Connections
-    autoload :ConnectionFactory, 'active_record/connections/connection_factory'
+    autoload :ConnectionProxy, 'active_record/connections/connection_proxy'
 
     extend ActiveSupport::Concern
 
@@ -33,7 +33,7 @@ module ActiveRecord
       #   end
       #
       def using_connection(connection_name, connection_spec)
-        self.proxy_connection = ConnectionFactory.establish_connection(connection_name, connection_spec)
+        self.proxy_connection = ConnectionProxy.new(connection_name, connection_spec)
 
         def self.connection_pool
           connection_handler.retrieve_connection_pool(proxy_connection)
