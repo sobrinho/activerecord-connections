@@ -1,4 +1,4 @@
-# ActiveRecord::Connections - Easy multiple databases for ActiveRecord
+# ActiveRecord::Connections
 
 ActiveRecord::Connections provides a new way to manage multi-tenant applications based on multiples databases.
 
