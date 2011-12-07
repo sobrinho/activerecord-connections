@@ -7,10 +7,6 @@ module ActiveRecord
 
     extend ActiveSupport::Concern
 
-    included do
-      cattr_accessor :proxy_connection
-    end
-
     module ClassMethods
       # Using on ApplicationController:
       #
@@ -55,6 +51,14 @@ module ActiveRecord
         def self.retrieve_connection
           connection_handler.retrieve_connection(self)
         end
+      end
+
+      def proxy_connection
+        Thread.current["ActiveRecord::Connections.proxy_connection"]
+      end
+
+      def proxy_connection=(proxy_connection)
+        Thread.current["ActiveRecord::Connections.proxy_connection"] = proxy_connection
       end
     end
   end

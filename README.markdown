@@ -47,7 +47,6 @@ If you are using Rails, you could use this way:
 
 ### Known issues
 
-* Do not work with multi-threads
 * Do not manage activerecord migrations for different databases
 * Similar objects of different connections do not differ
 * Coverage is not the best of the world (you could help easily)

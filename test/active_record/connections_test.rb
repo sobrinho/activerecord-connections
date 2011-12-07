@@ -66,6 +66,14 @@ class ActiveRecord::ConnectionsTest < MiniTest::Unit::TestCase
     end
   end
 
+  def test_proxy_connection
+    Thread.new do
+      ActiveRecord::Base.proxy_connection = 'proxy connection from another thread'
+    end.join
+
+    assert_nil ActiveRecord::Base.proxy_connection
+  end
+
   protected
 
   def each_customer(&block)
