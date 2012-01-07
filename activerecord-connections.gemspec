@@ -3,7 +3,7 @@ Gem::Specification.new do |s|
   s.version     = "0.0.3"
   s.authors     = ["Gabriel Sobrinho"]
   s.email       = ["gabriel.sobrinho@gmail.com"]
-  s.homepage    = "https://github.com/sobrinho/activerecord-connections"
+  s.homepage    = "https://github.com/nohupbrasil/activerecord-connections"
   s.summary     = %q{A new way to manage multi-tenant applications based on multiples databases}
   s.description = %q{A new way to manage multi-tenant applications based on multiples databases}
 

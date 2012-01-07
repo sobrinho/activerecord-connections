@@ -62,4 +62,4 @@ Need sharding or replication? Check out one of these bad boys:
 
 ## Copyright
 
-Copyright (c) 2011 Gabriel Sobrinho, released under the MIT license.
+Copyright (c) 2011-2012 nohup brasil, released under the MIT license.
