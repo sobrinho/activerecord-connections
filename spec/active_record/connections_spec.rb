@@ -69,6 +69,24 @@ describe ActiveRecord::Connections do
     end
   end
 
+  it 'allows nested proxy connections' do
+    @customer_1.using_connection do
+      @customer_2.using_connection do
+        @customer_3.using_connection do
+          Contact.update_all(:name => @customer_3.name)
+        end
+
+        Contact.update_all(:name => @customer_2.name)
+      end
+
+      Contact.update_all(:name => @customer_1.name)
+    end
+
+    Customer.each do |customer|
+      Contact.first.name.should eq customer.name
+    end
+  end
+
   it 'do not propagate proxy connection between threads (thread-safe)' do
     Thread.new do
       ActiveRecord::Base.proxy_connection = 'proxy connection from another thread'
