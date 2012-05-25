@@ -26,27 +26,12 @@ module ActiveRecord
     #   end
     #
     def using_connection(connection_name, connection_spec)
+      old_proxy_connection = proxy_connection
       self.proxy_connection = ConnectionProxy.new(connection_name, connection_spec)
-
-      def self.connection_pool
-        connection_handler.retrieve_connection_pool(proxy_connection)
-      end
-
-      def self.retrieve_connection
-        connection_handler.retrieve_connection(proxy_connection)
-      end
 
       yield
     ensure
-      self.proxy_connection = nil
-
-      def self.connection_pool
-        connection_handler.retrieve_connection_pool(self)
-      end
-
-      def self.retrieve_connection
-        connection_handler.retrieve_connection(self)
-      end
+      self.proxy_connection = old_proxy_connection
     end
 
     def proxy_connection
@@ -61,4 +46,12 @@ end
 
 ActiveSupport.on_load(:active_record) do
   extend ActiveRecord::Connections
+
+  def self.connection_pool
+    connection_handler.retrieve_connection_pool(proxy_connection || self)
+  end
+
+  def self.retrieve_connection
+    connection_handler.retrieve_connection(proxy_connection || self)
+  end
 end
