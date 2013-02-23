@@ -4,6 +4,7 @@ require 'active_record'
 require 'active_record/connections'
 require 'support/customer'
 require 'support/contact'
+require 'support/hotel'
 
 describe ActiveRecord::Connections do
   let :migrations_path do
@@ -12,6 +13,7 @@ describe ActiveRecord::Connections do
 
   before do
     ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
+    OtherDB.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
 
     ActiveRecord::Migration.verbose = false
     ActiveRecord::Migrator.migrate(migrations_path)
@@ -23,6 +25,12 @@ describe ActiveRecord::Connections do
     Customer.each do
       ActiveRecord::Migrator.migrate(migrations_path)
     end
+
+    # ActiveRecord:Migrator has ActiveRecord::Base hardcoded
+    # and use that to get the connection so we will migrate manually
+    OtherDB.connection.execute("
+      CREATE TABLE hotels(id int primary key,name text)
+    ")
 
     Customer.each do |customer|
       Contact.create!(:name => "Gabriel Sobrinho")
@@ -93,5 +101,14 @@ describe ActiveRecord::Connections do
     end.join
 
     ActiveRecord::Base.proxy_connection.should be_nil
+  end
+
+  it 'should have seperate dbs for contacts and hotels' do
+    Customer.each do |customer|
+      #there should be 3 tables: schema_migrations,customers,contacts
+      Contact.connection.tables.should eq ["schema_migrations","customers","contacts"]
+      #only one table created manually
+      Hotel.connection.tables.should eq ["hotels"]
+    end
   end
 end
