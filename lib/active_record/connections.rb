@@ -35,11 +35,19 @@ module ActiveRecord
     end
 
     def proxy_connection
-      Thread.current["ActiveRecord::Connections.proxy_connection"]
+      Thread.current[proxy_connection_thread_local_name]
     end
 
     def proxy_connection=(proxy_connection)
-      Thread.current["ActiveRecord::Connections.proxy_connection"] = proxy_connection
+      Thread.current[proxy_connection_thread_local_name] = proxy_connection
+    end
+
+    def proxy_connection_thread_local_name
+      cls = self
+      while cls != ActiveRecord::Base && !cls.abstract_class
+        cls = cls.superclass
+      end
+      "ActiveRecord::Connections.proxy_connection#{cls.name}"
     end
   end
 end
