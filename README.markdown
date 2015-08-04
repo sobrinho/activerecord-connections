@@ -50,7 +50,7 @@ If you are using Rails, you could use this way:
 * Do not manage activerecord migrations for different databases
 * Similar objects of different connections do not differ
 * Coverage is not the best of the world (you could help easily)
-* You will lost the connection if you call using_connection nested
+* You will lose the connection if you call using_connection nested
 
 ### Sharding and replication
 
