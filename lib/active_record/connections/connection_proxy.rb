@@ -1,8 +1,8 @@
+require 'active_support/basic_object'
+
 module ActiveRecord
   module Connections
-    base_proxy = defined?(ActiveSupport::ProxyObject) ? ActiveSupport::ProxyObject : ActiveSupport::BasicObject
-
-    class ConnectionProxy < base_proxy
+    class ConnectionProxy < ActiveSupport::BasicObject
       def initialize(connection_name, connection_spec)
         @connection_name, @connection_spec = connection_name, connection_spec
       end
